@@ -29,11 +29,10 @@ let ul = document.getElementById('navbar__list'), sections = document.querySelec
 createItem = (tagName, content, isHTMLContent = false) => {
     let li = document.createElement(tagName);
 
-    if (isHTMLContent) {
+    if (isHTMLContent)
         li.innerHTML = content;
-    } else {
+    else
         li.textContent = content;
-    }
 
     return li;
 }
@@ -60,6 +59,7 @@ scrollToTop = () => {
  * 
 */
 
+// build the nav
 navBuilder = () => {
     sections.forEach(section => {
         content = `
@@ -70,6 +70,29 @@ navBuilder = () => {
     });
 }
 
+// Add class 'active' to section when near top of viewport
+setActiveClassByScroll = () => {
+    document.addEventListener('scroll', ($event => {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800)
+            toTopBtn.style.display = "block";
+        else
+            toTopBtn.style.display = "none";
+
+        sections.forEach(section => {
+            let sectionId = section.getAttribute('id');
+
+            if (isInViewport(section)) {
+                section.classList.add('active');
+                document.querySelector(`a[data-href="${sectionId}"]`).classList.add('active');
+            } else {
+                section.classList.remove('active');
+                document.querySelector(`a[data-href="${sectionId}"]`).classList.remove('active');
+            }
+        });
+    }));
+}
+
+// Scroll to anchor ID using scrollTO event
 scrollToSection = () => {
     document.querySelectorAll('.menu__link').forEach(each => {
         each.addEventListener('click', ($event => {
@@ -86,29 +109,8 @@ scrollToSection = () => {
     });
 }
 
-setActiveClassByScroll = () => {
-    document.addEventListener('scroll', ($event => {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            toTopBtn.style.display = "block";
-        } else {
-            toTopBtn.style.display = "none";
-        }
-
-        sections.forEach(section => {
-            let sectionId = section.getAttribute('id');
-
-            if (isInViewport(section)) {
-                section.classList.add('active');
-                document.querySelector(`a[data-href="${sectionId}"]`).classList.add('active');
-            } else {
-                section.classList.remove('active');
-                document.querySelector(`a[data-href="${sectionId}"]`).classList.remove('active');
-            }
-        });
-    }));
-}
-
-displaySubMenu = () => {
+// Collapse the sections on h2 click
+collapse = () => {
     document.addEventListener('click', ($event => {
         let target = $event.target, parentId;
         if (target.getAttribute('data-parent')) {
@@ -118,11 +120,10 @@ displaySubMenu = () => {
                 item.style.height = '0px';
             });
 
-            if (document.querySelector(`#${parentId} .landing__container-content`).classList.contains('show')) {
+            if (document.querySelector(`#${parentId} .landing__container-content`).classList.contains('show'))
                 document.querySelector(`#${parentId} .landing__container-content`).classList.remove('show');
-            } else {
+            else
                 document.querySelector(`#${parentId} .landing__container-content`).classList.add('show');
-            }
 
             document.querySelectorAll('.landing__container-content.show').forEach(item => {
                 item.style.height = item.scrollHeight + 'px';
@@ -131,28 +132,19 @@ displaySubMenu = () => {
     }));
 }
 
+// hide header during the scroll event
 hideHeaderOnScroll = () => {
     document.addEventListener('scroll', () => {
         header.style.top = '0';
 
-        if (scrollTimer != -1) {
+        if (scrollTimer != -1)
             clearTimeout(scrollTimer);
-        }
 
         scrollTimer = window.setTimeout(() => {
             header.style.top = '-52px';
         }, 1000);
-    })
+    });
 }
-
-// build the nav
-navBuilder();
-
-// Add class 'active' to section when near top of viewport
-setActiveClassByScroll();
-
-// Scroll to anchor ID using scrollTO event
-scrollToSection();
 
 /**
  * End Main Functions
@@ -161,21 +153,22 @@ scrollToSection();
 */
 
 // Build menu 
+navBuilder();
 
 // Scroll to section on link click
+scrollToSection();
 
 // Set sections as active
+setActiveClassByScroll();
 
 // Collapse the sections on h2 click
-
 setTimeout(() => {
     document.querySelectorAll('.landing__container-content.show').forEach(item => {
         item.style.height = item.scrollHeight + 'px';
     });
 }, 100);
 
-displaySubMenu();
+collapse();
 
 // hide header during the scroll event
-
 hideHeaderOnScroll();

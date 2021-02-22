@@ -113,7 +113,9 @@ scrollToSection = () => {
 collapse = () => {
     document.addEventListener('click', ($event => {
         let target = $event.target, parentId;
+        
         if (target.getAttribute('data-parent')) {
+            target.classList.toggle('rotate');
             parentId = target.getAttribute('data-parent');
 
             document.querySelectorAll('.landing__container-content').forEach(item => {

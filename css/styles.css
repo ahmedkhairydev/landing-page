@@ -46,6 +46,12 @@ p {
     color: #eee;
 }
 
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* ---- Layout Rules ---- */
 main {
     margin: 10vh 1em 10vh;
@@ -218,6 +224,15 @@ section:nth-of-type(3n + 1) .landing__container::after {
     border-radius: 50%;
     opacity: 0;
     transition: ease 0.5s all;
+}
+
+svg {
+    padding: 8px;
+    transition: all .5s ease;
+}
+
+.rotate {
+    transform: rotate(180deg);
 }
 
 

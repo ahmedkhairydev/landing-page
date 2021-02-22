@@ -26,7 +26,7 @@ h1 {
     margin: 2em 1rem;
 }
 
-@media only screen and (min-width: 35em){
+@media only screen and (min-width: 35em) {
     h1 {
         font-size: 7em;
         margin: 2em 4rem 1em;
@@ -38,6 +38,7 @@ h2 {
     font-family: 'Oxygen', Sans-Serif;
     font-size: 3em;
     color: #fff;
+    cursor: pointer;
 }
 
 p {
@@ -60,6 +61,22 @@ section {
     min-height: 80vh;
 }
 
+#toTop {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.187);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+}
+
 
 /* ---- Module Rules ---- */
 
@@ -67,7 +84,7 @@ section {
 .navbar__menu ul {
     padding-left: 0;
     margin: 0;
-    text-align: right;
+    text-align: left;
 }
 
 .navbar__menu li {
@@ -80,9 +97,10 @@ section {
     font-weight: bold;
     text-decoration: none;
     color: #000;
+    cursor: pointer;
 }
 
-.navbar__menu .menu__link:hover {
+.navbar__menu .menu__link:hover, .navbar__menu .menu__link.active {
     background: #333;
     color: #fff;
     transition: ease 0.3s all;
@@ -95,6 +113,7 @@ section {
     top: 0;
     width: 100%;
     z-index: 5;
+    transition: ease 0.3s all;
 }
 
 /* Footer Styles */
@@ -104,7 +123,7 @@ section {
     color: #fff;
 }
 
-.page__footer p{
+.page__footer p {
     color: #fff;
 }
 
@@ -116,7 +135,19 @@ section {
     text-align: left;
 }
 
-@media only screen and (min-width: 35em){
+.landing__container-content {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.landing__container-content.show {
+    opacity: 1;
+}
+
+
+@media only screen and (min-width: 35em) {
     .landing__container {
         max-width: 50em;
         padding: 4em;
@@ -192,18 +223,18 @@ section:nth-of-type(3n + 1) .landing__container::after {
 
 /* ---- Theme State Rules ---- */
 /* Section Active Styles */
-/* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
-section.your-active-class {
+/* Note: active class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
+section.active {
     background: rgb(0, 0, 0);
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
-section.your-active-class .landing__container::before {
+section.active .landing__container::before {
     opacity: 1;
     animation: rotate 4s linear 0s infinite forwards;
 }
 
-section.your-active-class .landing__container::after {
+section.active .landing__container::after {
     opacity: 1;
     animation: rotate 5s linear 0s infinite forwards reverse;
 }
@@ -211,13 +242,10 @@ section.your-active-class .landing__container::after {
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
 	from {
-		transform: rotate(0deg)
-		           translate(-1em)
-		           rotate(0deg);
+		transform: rotate(0deg) translate(-1em) rotate(0deg);
 	}
+
 	to {
-		transform: rotate(360deg)
-		           translate(-1em) 
-		           rotate(-360deg);
+		transform: rotate(360deg) translate(-1em) rotate(-360deg);
 	}
 }

@@ -49,7 +49,7 @@ isInViewport = (element) => {
 
 scrollToTop = () => {
     window.scrollTo({
-        top: top,
+        top: 0,
         behavior: 'smooth'
     });
 }
